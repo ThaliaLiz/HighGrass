@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/andar_grama.mp3-e14e608df8a5a7868e8a42bf89616c82.mp3str"
+
+[deps]
+
+source_file="res://sounds/andar_grama.mp3"
+dest_files=[ "res://.import/andar_grama.mp3-e14e608df8a5a7868e8a42bf89616c82.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

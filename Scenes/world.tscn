@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Character.tscn" type="PackedScene" id=1]
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("character/Sprite/Viewport")
+
+[node name="Spatial" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="character" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, -16 )
+scale = Vector2( 1, 1 )
+
+[node name="Sprite" parent="character" index="0"]
+texture = SubResource( 1 )
+
+[node name="AnimationTree" parent="character/Sprite/Viewport/Spatial/highgrass protag" index="2"]
+parameters/idle_to_run/blend_position = 0.0
+
+[node name="StateManager" parent="character" index="1"]
+starting_state = NodePath("Move")
+
+[node name="Move" parent="character/StateManager" index="1"]
+wait_state = NodePath("../Wait")
+
+[editable path="character"]

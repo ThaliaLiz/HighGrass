@@ -1,0 +1,49 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Grass/GrassHeight8.png" type="Texture" id=1]
+[ext_resource path="res://grass.gd" type="Script" id=2]
+[ext_resource path="res://Grass/GrassHeight3.png" type="Texture" id=3]
+[ext_resource path="res://Grass/GrassHeight2.png" type="Texture" id=4]
+[ext_resource path="res://Grass/GrassHeight1.png" type="Texture" id=5]
+[ext_resource path="res://Grass/GrassHeight6.png" type="Texture" id=6]
+[ext_resource path="res://Grass/GrassHeight4.png" type="Texture" id=7]
+[ext_resource path="res://Grass/GrassHeight5.png" type="Texture" id=8]
+[ext_resource path="res://Grass/GrassHeight7.png" type="Texture" id=9]
+[ext_resource path="res://Resources/GrassSway.tres" type="Material" id=10]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 2.00001
+height = 9.99998
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 9 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 5 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "growing",
+"speed": 12.0
+} ]
+
+[node name="Grass" type="Area2D"]
+script = ExtResource( 2 )
+
+[node name="GrassFullHeight" type="Sprite" parent="."]
+material = ExtResource( 10 )
+position = Vector2( 0, -24 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( -8, -24 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -2 )
+rotation = 1.57079
+shape = SubResource( 1 )
+
+[node name="GrassGrowing" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 0, -24 )
+frames = SubResource( 2 )
+animation = "growing"
+
+[connection signal="body_entered" from="." to="." method="_on_Grass_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_Grass_body_exited"]
+[connection signal="animation_finished" from="GrassGrowing" to="." method="_on_GrassGrowing_animation_finished"]

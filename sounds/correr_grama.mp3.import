@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/correr_grama.mp3-2034ac407f5345e361e708d9e0d5f15f.mp3str"
+
+[deps]
+
+source_file="res://sounds/correr_grama.mp3"
+dest_files=[ "res://.import/correr_grama.mp3-2034ac407f5345e361e708d9e0d5f15f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

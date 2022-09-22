@@ -1,11 +1,12 @@
 class_name Player
 extends KinematicBody2D
 
-export (float) var speed = 60 * 5
-var accel = 1000 * 2
-var brake = 1000 * 5
+export (float) var speed = 60 * 2
+var accel = 1000 * 2.5
+var brake = 1000 * 8
 var velocity = Vector2.ZERO
 var is_pressing = false
+var has_key = false
 
 onready var states = $StateManager
 

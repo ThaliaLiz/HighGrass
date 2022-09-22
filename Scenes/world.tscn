@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scenes/Character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Props/Grass/GrassPatch_2.tscn" type="PackedScene" id=2]
@@ -10,6 +10,9 @@
 [ext_resource path="res://Props/Grass/GrassPatch_4.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Props/Grass/GrassPatch_3.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Resources/OutlineShader.tres" type="Material" id=10]
+[ext_resource path="res://Temp assets/BW_key.png" type="Texture" id=11]
+[ext_resource path="res://Scenes/KeyInterface.gd" type="Script" id=12]
+[ext_resource path="res://Temp assets/key.png" type="Texture" id=13]
 
 [sub_resource type="DynamicFont" id=2]
 size = 18
@@ -66,13 +69,22 @@ custom_fonts/font = SubResource( 2 )
 text = "get the key!"
 
 [node name="MarginContainer2" type="MarginContainer" parent="WinScreen"]
-margin_left = 51.2
-margin_top = 30.0
-margin_right = 972.2
-margin_bottom = 570.0
-__meta__ = {
-"_edit_lock_": true
-}
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -97.0
+margin_top = -83.0
+margin_right = -49.0
+margin_bottom = -42.0
+rect_scale = Vector2( 2, 2 )
+
+[node name="KeyInterface" type="TextureRect" parent="WinScreen/MarginContainer2"]
+margin_right = 48.0
+margin_bottom = 41.0
+texture = ExtResource( 11 )
+script = ExtResource( 12 )
+got_key_texture = ExtResource( 13 )
 
 [node name="FullScene" type="Sprite" parent="."]
 material = ExtResource( 10 )
@@ -89,7 +101,7 @@ position = Vector2( 511, 300 )
 [node name="YSort" type="YSort" parent="FullScene/Viewport/Camera2D"]
 
 [node name="Key" parent="FullScene/Viewport/Camera2D/YSort" instance=ExtResource( 6 )]
-position = Vector2( 664, -83 )
+position = Vector2( 250, 0 )
 player = NodePath("../player")
 
 [node name="player" parent="FullScene/Viewport/Camera2D/YSort" instance=ExtResource( 1 )]
@@ -102,13 +114,11 @@ speed = 200.0
 texture = SubResource( 1 )
 
 [node name="AnimationTree" parent="FullScene/Viewport/Camera2D/YSort/player/Sprite/Viewport/Spatial/highgrass protag" index="2"]
+parameters/feet_to_crouch/blend_amount = 0
 parameters/idle_to_run/blend_position = 0.0
 
 [node name="StateManager" parent="FullScene/Viewport/Camera2D/YSort/player" index="1"]
 starting_state = NodePath("Move")
-
-[node name="Move" parent="FullScene/Viewport/Camera2D/YSort/player/StateManager" index="1"]
-wait_state = NodePath("../Wait")
 
 [node name="Ambulancia" parent="FullScene/Viewport/Camera2D/YSort" instance=ExtResource( 4 )]
 position = Vector2( -425, -228.764 )
@@ -823,6 +833,7 @@ position = Vector2( -175, 760 )
 position = Vector2( -234, 486 )
 
 [connection signal="body_entered" from="FullScene/Viewport/Camera2D/YSort/Key" to="FullScene/Viewport/Camera2D/YSort/Key" method="_on_Key_body_entered"]
+[connection signal="got_key" from="FullScene/Viewport/Camera2D/YSort/Key" to="WinScreen/MarginContainer2/KeyInterface" method="change_texture"]
 [connection signal="body_entered" from="FullScene/Viewport/Camera2D/YSort/Ambulancia/Area2D" to="FullScene/Viewport/Camera2D/YSort/Ambulancia" method="_on_Area2D_body_entered"]
 
 [editable path="FullScene/Viewport/Camera2D/YSort/player"]

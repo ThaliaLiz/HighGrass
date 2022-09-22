@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://Scenes/Player.gd"
+}, {
+"base": "BaseState",
+"class": "StateAnimation",
+"language": "GDScript",
+"path": "res://Resources/StateAnimation.gd"
 } ]
 _global_script_class_icons={
 "BaseState": "",
-"Player": ""
+"Player": "",
+"StateAnimation": ""
 }
 
 [application]

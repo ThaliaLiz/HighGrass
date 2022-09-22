@@ -1122,8 +1122,6 @@ tracks/22/keys = {
 "values": [ Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="AnimationNodeBlend2" id=14]
-
 [sub_resource type="AnimationNodeAnimation" id=11]
 animation = "Crouch"
 
@@ -1131,6 +1129,8 @@ animation = "Crouch"
 animation = "Slide"
 
 [sub_resource type="AnimationNodeBlend2" id=13]
+
+[sub_resource type="AnimationNodeBlend2" id=14]
 
 [sub_resource type="AnimationNodeAnimation" id=15]
 animation = "RunningBackwards"
@@ -1151,19 +1151,19 @@ blend_point_2/pos = 0.0
 snap = 0.01
 
 [sub_resource type="AnimationNodeBlendTree" id=18]
-graph_offset = Vector2( -646.715, -133 )
-nodes/Blend2/node = SubResource( 14 )
-nodes/Blend2/position = Vector2( 80, -100 )
+graph_offset = Vector2( -695.995, -72.44 )
 nodes/Crouch/node = SubResource( 11 )
 nodes/Crouch/position = Vector2( -280, 20 )
 nodes/Slide/node = SubResource( 12 )
 nodes/Slide/position = Vector2( -280, 120 )
 nodes/crouch_to_slide/node = SubResource( 13 )
 nodes/crouch_to_slide/position = Vector2( -100, 40 )
+nodes/feet_to_crouch/node = SubResource( 14 )
+nodes/feet_to_crouch/position = Vector2( 80, -100 )
 nodes/idle_to_run/node = SubResource( 17 )
 nodes/idle_to_run/position = Vector2( -140, -100 )
 nodes/output/position = Vector2( 280, -100 )
-node_connections = [ "output", 0, "Blend2", "crouch_to_slide", 0, "Crouch", "crouch_to_slide", 1, "Slide", "Blend2", 0, "idle_to_run", "Blend2", 1, "crouch_to_slide" ]
+node_connections = [ "output", 0, "feet_to_crouch", "crouch_to_slide", 0, "Crouch", "crouch_to_slide", 1, "Slide", "feet_to_crouch", 0, "idle_to_run", "feet_to_crouch", 1, "crouch_to_slide" ]
 
 [sub_resource type="CapsuleShape2D" id=21]
 radius = 4.00001
@@ -1173,15 +1173,16 @@ height = 7.99997
 material = ExtResource( 3 )
 scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 5 )
+speed = 80.0
 
 [node name="Sprite" type="Sprite" parent="."]
 material = ExtResource( 3 )
 texture = SubResource( 20 )
 centered = false
-offset = Vector2( -32, -58 )
+offset = Vector2( -24, -48 )
 
 [node name="Viewport" type="Viewport" parent="Sprite"]
-size = Vector2( 64, 64 )
+size = Vector2( 48, 48 )
 transparent_bg = true
 render_target_v_flip = true
 
@@ -1325,9 +1326,9 @@ anims/SwordSwings = SubResource( 8 )
 tree_root = SubResource( 18 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/Blend2/blend_amount = 0.0
-parameters/crouch_to_slide/blend_amount = 1.0
-parameters/idle_to_run/blend_position = 1.0
+parameters/crouch_to_slide/blend_amount = 0.0
+parameters/feet_to_crouch/blend_amount = 0.0
+parameters/idle_to_run/blend_position = -1.0
 
 [node name="StateManager" type="Node" parent="."]
 script = ExtResource( 4 )
@@ -1335,10 +1336,15 @@ starting_state = NodePath("Wait")
 
 [node name="Wait" type="Node" parent="StateManager"]
 script = ExtResource( 6 )
+animation_tree = NodePath("../../Sprite/Viewport/Spatial/highgrass protag/AnimationTree")
+player_pivot = NodePath("../../Sprite/Viewport/Spatial/highgrass protag/Rig")
 move_state = NodePath("../Move")
 
 [node name="Move" type="Node" parent="StateManager"]
 script = ExtResource( 7 )
+animation_tree = NodePath("../../Sprite/Viewport/Spatial/highgrass protag/AnimationTree")
+player_pivot = NodePath("../../Sprite/Viewport/Spatial/highgrass protag/Rig")
+wait_state = NodePath("../Wait")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -6 )
